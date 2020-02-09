@@ -12,6 +12,11 @@
 }
 .map{
   position: relative;
+
+  .new_point{
+    filter: hue-rotate(80deg);
+  }
+
   .question_form{
     position: absolute;
     top:0;
@@ -19,6 +24,7 @@
     height:100%;
     width:300px;
     z-index:999;
+    padding:1em;
     background-color:white;
     display:flex;
     flex-direction:column;

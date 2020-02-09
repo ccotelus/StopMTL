@@ -1,23 +1,31 @@
 import React, {useState} from "react";
 import "./App.scss";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import L from 'leaflet'
 import { ReactComponent as StopMtlLogo } from "../stopmtl-logo.svg";
-const defaultRandomPoints = [{"active":true,"lat":45.561216285159894,"lng":-73.57955932617189,"date":"2020-02-04","moment":"matin","age":"14","genre":"homme","groupe_ethnique":"Arabe","orientation_sexuelle":"Gai"},{"active":true,"lat":45.500624918500776,"lng":-73.71482849121095,"date":"2020-02-07","moment":"midi","age":"17","genre":"Ces catégories ne me définissent pas","groupe_ethnique":"Sud-Asiatique","orientation_sexuelle":"Bisexuel(le)"},{"active":true,"lat":45.6371036906098,"lng":-73.56719970703126},{"active":true,"lat":45.54439189762151,"lng":-73.66744995117189},{"active":true,"lat":45.449119091670866,"lng":-73.59260559082033},{"active":true,"lat":45.525157858855565,"lng":-73.48342895507814},{"active":true,"lat":45.59677126585605,"lng":-73.51226806640626}]
 function App() {
+  const defaultRandomPoints = [{"active":true,"lat":45.561216285159894,"lng":-73.57955932617189,"date":"2020-02-04","moment":"matin","age":"14","genre":"homme","groupe_ethnique":"Arabe","orientation_sexuelle":"Gai"},{"active":true,"lat":45.500624918500776,"lng":-73.71482849121095,"date":"2020-02-07","moment":"midi","age":"17","genre":"Ces catégories ne me définissent pas","groupe_ethnique":"Sud-Asiatique","orientation_sexuelle":"Bisexuel(le)"},{"active":true,"lat":45.6371036906098,"lng":-73.56719970703126},{"active":true,"lat":45.54439189762151,"lng":-73.66744995117189},{"active":true,"lat":45.449119091670866,"lng":-73.59260559082033},{"active":true,"lat":45.525157858855565,"lng":-73.48342895507814},{"active":true,"lat":45.59677126585605,"lng":-73.51226806640626}]
+  const defaultNewPoint = {
+    active:false,
+    lat:undefined,
+    lng:undefined,
+    date:undefined,
+    moment:undefined,
+    age:undefined,
+    genre:undefined,
+    groupe_ethnique:undefined,
+    orientation_sexuelle:undefined,
+}
   const [position, setPosition] = useState([45.53, -73.57]);
   const [mapPoints, setMapPoints] = useState(defaultRandomPoints)
-  const [newPoint, setNewPoint] = useState({
-      active:false,
-      lat:undefined,
-      lng:undefined,
-      date:undefined,
-      moment:undefined,
-      age:undefined,
-      genre:undefined,
-      groupe_ethnique:undefined,
-      orientation_sexuelle:undefined,
-  })
-  
+  const [newPoint, setNewPoint] = useState(defaultNewPoint)
+
+  const myIcon = L.icon({
+    iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+    iconSize: [25, 41],
+    iconAnchor: [15, 41],
+    className:'new_point'
+});
   const momentDuJour = ['matin','midi','soir'].map(ele => <option value={ele}>{ele}</option>)
   const ageAuMoment = [...Array(87).keys()].map(ele => <option value={ele+12}>{ele+12}</option>)
   const genre = ['femme','homme','Ces catégories ne me définissent pas'].map(ele => <option value={ele}>{ele}</option>)
@@ -39,17 +47,7 @@ function App() {
 
     //Save to mapPointList
     setMapPoints([...mapPoints, newPoint])
-    setNewPoint({
-      active:false,
-      lat:undefined,
-      lng:undefined,
-      date:undefined,
-      moment:undefined,
-      age:undefined,
-      genre:undefined,
-      groupe_ethnique:undefined,
-      orientation_sexuelle:undefined,
-  })
+    setNewPoint(defaultNewPoint)
   }
   const map = (
     <Map center={position} zoom={11} onClick={addMapPoint}>
@@ -58,7 +56,7 @@ function App() {
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
       {newPoint.active &&
-      <Marker position={[newPoint.lat, newPoint.lng]}>
+      <Marker position={[newPoint.lat, newPoint.lng]} icon={myIcon}>
         <Popup>
           Nouvelle intervention
         </Popup>
