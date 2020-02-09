@@ -20,9 +20,6 @@ function App() {
     </Map>
   );
 
-  const greeting =
-    lang === "fr" ? "Bienvenue sur ce site joyeux" : "Welcome to this site";
-
   return (
     <div className='App'>
       <header>
@@ -39,7 +36,24 @@ function App() {
           </li>
         </ul>
       </header>
-      {map}
+      <main>
+        {map}
+        <section className='about'>
+          <h2>Qu'est-ce que StopMTL ?</h2>
+          <p>
+            Explication du projet Lorem ipsum dolor sit, amet consectetur
+            adipisicing elit. Delectus provident explicabo aliquid fugit eveniet
+            eum id exercitationem architecto! Eos, ipsam sapiente. Cupiditate
+            numquam hic voluptatibus facere aliquam id aspernatur. Autem?
+          </p>
+          <p>
+            Explication du projet Lorem ipsum dolor sit, amet consectetur
+            adipisicing elit. Delectus provident explicabo aliquid fugit eveniet
+            eum id exercitationem architecto! Eos, ipsam sapiente. Cupiditate
+            numquam hic voluptatibus facere aliquam id aspernatur. Autem?
+          </p>
+        </section>
+      </main>
     </div>
   );
 }
