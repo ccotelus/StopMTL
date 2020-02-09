@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import "./App.scss";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { ReactComponent as StopMtlLogo } from "../stopmtl-logo.svg";
 
 function App() {
   const lang = "fr";
@@ -25,8 +25,20 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>StopMTL</h1>
-      <h2>{greeting}</h2>
+      <header>
+        <StopMtlLogo />
+        <ul>
+          <li>
+            <a href='#'>À Propos</a>
+          </li>
+          <li>
+            <a href='#'>Confidentialité</a>
+          </li>
+          <li>
+            <a href='#'>Contact</a>
+          </li>
+        </ul>
+      </header>
       {map}
     </div>
   );
