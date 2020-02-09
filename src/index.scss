@@ -1,0 +1,36 @@
+@import "variables";
+
+@font-face {
+  font-family: "Web-GeoGrotesque";
+  font-style: normal;
+  src: url("/fonts/Net-Geogtq-Rg.otf");
+}
+
+header {
+  font-family: "Web-Geogrotesque";
+  height: 70px;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+
+  svg {
+    height: 100%;
+  }
+  ul {
+    display: flex;
+
+    li {
+      margin: 0 1em;
+      list-style-type: none;
+
+      a {
+        color: $main-color;
+        text-decoration: none;
+
+        &:hover {
+          color: $highlight-color;
+        }
+      }
+    }
+  }
+}
