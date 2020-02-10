@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import "./App.scss";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import L from 'leaflet'
+import ReCAPTCHA from 'react-google-recaptcha'
+
+import "./App.scss";
 import { ReactComponent as StopMtlLogo } from "../stopmtl-logo.svg";
 function App() {
   const defaultRandomPoints = [{"active":true,"lat":45.561216285159894,"lng":-73.57955932617189,"date":"2020-02-04","moment":"matin","age":"14","genre":"homme","groupe_ethnique":"Arabe","orientation_sexuelle":"Gai"},{"active":true,"lat":45.500624918500776,"lng":-73.71482849121095,"date":"2020-02-07","moment":"midi","age":"17","genre":"Ces catégories ne me définissent pas","groupe_ethnique":"Sud-Asiatique","orientation_sexuelle":"Bisexuel(le)"},{"active":true,"lat":45.6371036906098,"lng":-73.56719970703126},{"active":true,"lat":45.54439189762151,"lng":-73.66744995117189},{"active":true,"lat":45.449119091670866,"lng":-73.59260559082033},{"active":true,"lat":45.525157858855565,"lng":-73.48342895507814},{"active":true,"lat":45.59677126585605,"lng":-73.51226806640626}]
@@ -15,7 +17,9 @@ function App() {
     genre:undefined,
     groupe_ethnique:undefined,
     orientation_sexuelle:undefined,
+    captcha:false
 }
+const recaptchaRef = React.createRef();
   const [position, setPosition] = useState([45.53, -73.57]);
   const [mapPoints, setMapPoints] = useState(defaultRandomPoints)
   const [newPoint, setNewPoint] = useState(defaultNewPoint)
@@ -31,7 +35,7 @@ function App() {
   const genre = ['femme','homme','Ces catégories ne me définissent pas'].map(ele => <option value={ele}>{ele}</option>)
   const groupeEthnique = ["Noir","Arabe","Autochtone","Sud-Asiatique","Chinois","Philippin","Asiatique du Sud-Est (p. ex., Vietnamien, Cambodgien, Malaisien, Laotien)","Asiatique occidental (p. ex., Iranien, Afghan)","Coréen","Japonais","Latino-Américain","Blanc","Autre – précisez"].map(ele => <option value={ele}>{ele}</option>)
   const orientationSexuelle = ["Hétérosexuel(le)","Gai","Lesbienne","Bisexuel(le)","Ces catégories ne me définissent pas"].map(ele => <option value={ele}>{ele}</option>)
-  const listOfMapPoints = mapPoints.map(ele => (<Marker position={[ele.lat, ele.lng]}></Marker>))
+  const listOfMapPoints = mapPoints.map((ele, index) => (<Marker key={index} position={[ele.lat, ele.lng]}></Marker>))
     const addMapPoint = event => {
     const {lat, lng} = event.latlng
     
@@ -44,10 +48,14 @@ function App() {
 
   const saveMapPoint = event => {
     event.preventDefault()
-
+    const recaptchaValue = recaptchaRef.current.getValue();
+    console.log(recaptchaValue)
     //Save to mapPointList
-    setMapPoints([...mapPoints, newPoint])
-    setNewPoint(defaultNewPoint)
+    if(newPoint.captcha){
+      
+      setMapPoints([...mapPoints, newPoint])
+      setNewPoint(defaultNewPoint)
+    }
   }
   const map = (
     <Map center={position} zoom={11} onClick={addMapPoint}>
@@ -114,6 +122,12 @@ function App() {
 
 {orientationSexuelle}
             </select>
+            <ReCAPTCHA
+        ref={recaptchaRef}
+        sitekey="6LcpSdcUAAAAAA0J49ouiciAj5CBqlHVlITUTnrx"
+        onChange={() => setNewPoint({...newPoint, captcha:true})}
+        className="captcha"
+      />
             <input type="submit"/>
             </form>
           </div>
