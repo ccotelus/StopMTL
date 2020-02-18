@@ -12,6 +12,9 @@ function App() {
     lat:undefined,
     lng:undefined,
     date:undefined,
+    annee:undefined,
+    mois:undefined,
+    jour:undefined,
     moment:undefined,
     age:undefined,
     genre:undefined,
@@ -23,6 +26,7 @@ const recaptchaRef = React.createRef();
   const [position, setPosition] = useState([45.53, -73.57]);
   const [mapPoints, setMapPoints] = useState(defaultRandomPoints)
   const [newPoint, setNewPoint] = useState(defaultNewPoint)
+  const [addressSearch, setAddressSearch] = useState("")
 
   const myIcon = L.icon({
     iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
@@ -30,11 +34,14 @@ const recaptchaRef = React.createRef();
     iconAnchor: [15, 41],
     className:'new_point'
 });
-  const momentDuJour = ['matin','midi','soir'].map(ele => <option value={ele}>{ele}</option>)
-  const ageAuMoment = [...Array(87).keys()].map(ele => <option value={ele+12}>{ele+12}</option>)
-  const genre = ['femme','homme','Ces catégories ne me définissent pas'].map(ele => <option value={ele}>{ele}</option>)
-  const groupeEthnique = ["Noir","Arabe","Autochtone","Sud-Asiatique","Chinois","Philippin","Asiatique du Sud-Est (p. ex., Vietnamien, Cambodgien, Malaisien, Laotien)","Asiatique occidental (p. ex., Iranien, Afghan)","Coréen","Japonais","Latino-Américain","Blanc","Autre – précisez"].map(ele => <option value={ele}>{ele}</option>)
-  const orientationSexuelle = ["Hétérosexuel(le)","Gai","Lesbienne","Bisexuel(le)","Ces catégories ne me définissent pas"].map(ele => <option value={ele}>{ele}</option>)
+  const anneeInterpellation = [...Array(20).keys()].map(ele => <option key={ele} value={ele+2000}>{ele+2000}</option>)
+  const moisInterpellation = [...Array(12).keys()].map(ele => <option key={ele} value={ele+1}>{ele+1}</option>)
+  const jourInterpellation = [...Array(31).keys()].map(ele => <option key={ele} value={ele+1}>{ele+1}</option>)
+  const momentDuJour = ['matin','midi','soir'].map(ele => <option key={ele} value={ele}>{ele}</option>)
+  const ageAuMoment = [...Array(87).keys()].map(ele => <option key={ele} value={ele+12}>{ele+12}</option>)
+  const genre = ['femme','homme','Ces catégories ne me définissent pas'].map(ele => <option key={ele} value={ele}>{ele}</option>)
+  const groupeEthnique = ["Noir","Arabe","Autochtone","Sud-Asiatique","Chinois","Philippin","Asiatique du Sud-Est (p. ex., Vietnamien, Cambodgien, Malaisien, Laotien)","Asiatique occidental (p. ex., Iranien, Afghan)","Coréen","Japonais","Latino-Américain","Blanc","Autre – précisez"].map(ele => <option key={ele} value={ele}>{ele}</option>)
+  const orientationSexuelle = ["Hétérosexuel(le)","Gai","Lesbienne","Bisexuel(le)","Ces catégories ne me définissent pas"].map(ele => <option key={ele} value={ele}>{ele}</option>)
   const listOfMapPoints = mapPoints.map((ele, index) => (<Marker key={index} position={[ele.lat, ele.lng]}></Marker>))
     const addMapPoint = event => {
     const {lat, lng} = event.latlng
@@ -57,11 +64,30 @@ const recaptchaRef = React.createRef();
       setNewPoint(defaultNewPoint)
     }
   }
+
+  const findLatLong = (address) => {
+    fetch(`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_TOKEN}&q=${address}&format=json`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
+          if(Array.isArray(myJson)){
+            
+            const [{lat, lon}] = myJson
+            if(lat && lon){
+  
+              setNewPoint(newPoint => ({...newPoint, active:true, lat: lat, lng: lon}))
+            }
+          }
+      });
+
+  }
   const map = (
     <Map center={position} zoom={11} onClick={addMapPoint}>
       <TileLayer
-        attribution='&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        // url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        url='https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.png'
       />
       {newPoint.active &&
       <Marker position={[newPoint.lat, newPoint.lng]} icon={myIcon}>
@@ -93,12 +119,31 @@ const recaptchaRef = React.createRef();
       <main>
         <section className="map">
         {map}
+        <form className="addressSearch" onSubmit={e => {
+          e.preventDefault()
+          findLatLong(addressSearch)
+        }}>
+
+        <input type="text" placeholder="Veuillez entrer votre adresse ou cliquer sur la carte pour entrer une nouvelle intervention." value={addressSearch} onChange={e => setAddressSearch(e.target.value)}/>
+        </form>
         {newPoint.active && (
           <div className="question_form">
             <h2>Ajout d'une intervention</h2>
             <form onSubmit={saveMapPoint}>
 
-            <input type="date" name="date" onChange={e => updateMapPoint(e)}/>
+            {/* <input type="date" name="date" onChange={e => updateMapPoint(e)}/> */}
+            <select name="annee" onChange={e => updateMapPoint(e)}>
+              <option value="">Année</option>
+              {anneeInterpellation}            
+            </select>
+            <select name="mois" onChange={e => updateMapPoint(e)}>
+              <option value="">Mois</option>
+              {moisInterpellation}            
+            </select>
+            <select name="jour" onChange={e => updateMapPoint(e)}>
+              <option value="">Jour</option>
+              {jourInterpellation}            
+            </select>
             <select name="moment" onChange={e => updateMapPoint(e)}>
               <option value="">Moment de la journée</option>
               {momentDuJour}            </select>
@@ -128,7 +173,14 @@ const recaptchaRef = React.createRef();
         onChange={() => setNewPoint({...newPoint, captcha:true})}
         className="captcha"
       />
+      <div>
+
             <input type="submit"/>
+            <input type="reset" onClick={() => {
+              setNewPoint(defaultNewPoint)
+              setAddressSearch("")
+              }}/>
+      </div>
             </form>
           </div>
         )}
