@@ -1,0 +1,6 @@
+
+INSERT INTO points (lat, lng, date, moment, age, genre, groupe_ethnique, orientation_sexuelle) VALUES (45.6371036906098,-73.56719970703126, '1/18/1999', 'jour', 22, 'homme', 'secret', 'personal yo.');
+INSERT INTO points (lat, lng, date, moment, age, genre, groupe_ethnique, orientation_sexuelle) VALUES (45.54439189762151,-73.66744995117189, '1/18/1999', 'nuit', 13, 'femme', 'secret', 'personal yo.');
+INSERT INTO points (lat, lng, date, moment, age, genre, groupe_ethnique, orientation_sexuelle) VALUES (45.449119091670866,-73.59260559082033, '1/18/1999', 'jour', 67, 'autre', 'secret', 'personal yo.');
+INSERT INTO points (lat, lng, date, moment, age, genre, groupe_ethnique, orientation_sexuelle) VALUES (45.525157858855565,-73.48342895507814, '1/18/1999', 'jour', 80, 'autre', 'secret', 'personal yo.');
+INSERT INTO points (lat, lng, date, moment, age, genre, groupe_ethnique, orientation_sexuelle) VALUES (45.59677126585605,-73.51226806640626, '1/18/1999' , 'nuit', 11, 'autre', 'secret', 'personal yo.');
