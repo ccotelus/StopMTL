@@ -174,7 +174,7 @@ function App() {
       <TileLayer
         attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         // url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        url='https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.png'
+        url='https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png'
       />
       {newPoint.active && (
         <Marker position={[newPoint.lat, newPoint.lng]} icon={myIcon}>
@@ -221,19 +221,18 @@ function App() {
           {newPoint.active && (
             <div className='question_form'>
               <h2>Ajout d'une intervention</h2>
+              <h3>
+                Veuillez entrer les informations au moment de l'intervention
+              </h3>
               <form onSubmit={saveMapPoint}>
                 {/* <input type="date" name="date" onChange={e => updateMapPoint(e)}/> */}
                 <select name='annee' onChange={e => updateMapPoint(e)}>
-                  <option value=''>Année</option>
+                  <option value=''>Année au moment de l'intervention</option>
                   {anneeInterpellation}
                 </select>
                 <select name='mois' onChange={e => updateMapPoint(e)}>
-                  <option value=''>Mois</option>
+                  <option value=''>Mois au moment de l'intervention</option>
                   {moisInterpellation}
-                </select>
-                <select name='jour' onChange={e => updateMapPoint(e)}>
-                  <option value=''>Jour</option>
-                  {jourInterpellation}
                 </select>
                 <select name='moment' onChange={e => updateMapPoint(e)}>
                   <option value=''>Moment de la journée</option>
@@ -247,16 +246,9 @@ function App() {
                 <select
                   name='groupe_ethnique'
                   onChange={e => updateMapPoint(e)}
+                  multiple
                 >
                   <option value=''>Groupe ethnique</option>
-
-                  {groupeEthnique}
-                </select>
-                <select
-                  name='orientation_sexuelle'
-                  onChange={e => updateMapPoint(e)}
-                >
-                  <option value=''>Orientation sexuelle</option>
 
                   {groupeEthnique}
                 </select>
@@ -302,6 +294,16 @@ function App() {
             eum id exercitationem architecto! Eos, ipsam sapiente. Cupiditate
             numquam hic voluptatibus facere aliquam id aspernatur. Autem?
           </p>
+        </section>
+        <section className='about'>
+          <h2>Comment ça marche ?</h2>
+          <ul>
+            <li>Cliquer sur la carte</li>
+            <li>Cliquer sur la carte</li>
+            <li>Cliquer sur la carte</li>
+            <li>Cliquer sur la carte</li>
+            <li>Cliquer sur la carte</li>
+          </ul>
         </section>
       </main>
     </div>
