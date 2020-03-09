@@ -43,7 +43,12 @@ export const InterventionForm = props => {
 
 					{ageAuMoment}
 				</select>
-				<select
+				<select name="genre" onChange={e => updateMapPoint(e)}>
+					<option value="">Genre</option>
+
+					{genre}
+				</select>
+				{/* <select
 					name="groupe_ethnique"
 					onChange={e => updateMapPoint(e)}
 					multiple
@@ -51,12 +56,16 @@ export const InterventionForm = props => {
 					<option value="">Groupe ethnique</option>
 
 					{groupeEthnique}
-				</select>
+				</select> */}
 				<select name="orientation_sexuelle" onChange={e => updateMapPoint(e)}>
 					<option value="">Orientation sexuelle</option>
 
 					{orientationSexuelle}
 				</select>
+				<div className="checkbox">
+					<h1>Groupe Ethnique</h1>
+					<div>{groupeEthnique}</div>
+				</div>
 				<ReCAPTCHA
 					ref={recaptchaRef}
 					sitekey="6LcpSdcUAAAAAA0J49ouiciAj5CBqlHVlITUTnrx"

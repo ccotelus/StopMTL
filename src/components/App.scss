@@ -62,7 +62,7 @@ main > section {
 			flex-direction: column;
 			align-items: center;
 		}
-		input,
+		input:not([type="checkbox"]),
 		select {
 			width: 100%;
 			border: 1px solid $faded-color;
@@ -80,6 +80,33 @@ main > section {
 
 		.captcha {
 			margin: 0 auto;
+		}
+
+		.checkbox {
+			border: 1px solid $faded-color;
+			border-radius: 0.2em;
+			margin-bottom: 0.5em;
+
+			h1 {
+				margin: 0 0 0.3em;
+				font-weight: normal;
+				font-size: 1.2em;
+				padding: 0.4em 0.8em;
+				border-bottom: 1px solid $faded-color;
+			}
+			& > div {
+				height: 100px;
+				overflow-y: scroll;
+				font-size: 1.2em;
+
+				article {
+					padding: 0.1em 0.5em;
+					box-sizing: border-box;
+					display: flex;
+					justify-content: space-between;
+					width: 100%;
+				}
+			}
 		}
 	}
 }
