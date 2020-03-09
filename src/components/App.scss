@@ -51,7 +51,14 @@ main > section {
 		box-sizing: border-box;
 		border-left: 1px solid black;
 		box-shadow: -10px 0px 8px -7px rgba(0, 0, 0, 0.75);
+		// overflow-y: scroll;
 
+		.scrollarea-content {
+			// padding-right: 1.5em;
+		}
+		.scrollbar-container {
+			opacity: 0.5;
+		}
 		h2 {
 			text-align: center;
 		}

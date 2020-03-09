@@ -13,6 +13,22 @@ export const VotreHistoire = props => {
 				donc s'écouler un certain temps avant que votre histoire apparaisse sur
 				cette page.
 			</p>
+			<form>
+				<h1>Votre histoire</h1>
+				<textarea name="" id="" cols="30" rows="10"></textarea>
+			</form>
+			<main>
+				<h1>Les histoires</h1>
+				<article>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
+						quas harum voluptatibus reprehenderit fugit est at nisi voluptas
+						distinctio suscipit iusto totam repellendus earum eaque cum, ad
+						porro. Obcaecati, iure.
+					</p>
+					<p>Publié le 12 octobre 2034</p>
+				</article>
+			</main>
 		</section>
 	);
 };

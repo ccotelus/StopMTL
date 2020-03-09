@@ -59,7 +59,7 @@ function App() {
 		orientation_sexuelle: undefined,
 		captcha: false
 	};
-	const [position, setPosition] = useState([45.53, -73.57]);
+	const [position, setPosition] = useState([45.53, -73.7]);
 	const [mapPoints, setMapPoints] = useState(defaultRandomPoints);
 	const [newPoint, setNewPoint] = useState(defaultNewPoint);
 	const [addressSearch, setAddressSearch] = useState("");
@@ -73,7 +73,18 @@ function App() {
 	});
 
 	const listOfMapPoints = mapPoints.map((ele, index) => (
-		<Marker key={index} position={[ele.lat, ele.lng]}></Marker>
+		<Marker key={index} position={[ele.lat, ele.lng]}>
+			<Popup>
+				<span>Intervention</span>
+				<ul>
+					<li>Quand : {ele.date}</li>
+					<li>
+						Qui : {ele.groupe_ethnique}, {ele.orientation_sexuelle}
+					</li>
+					<li>Âge : {ele.age}</li>
+				</ul>
+			</Popup>
+		</Marker>
 	));
 	const addMapPoint = event => {
 		const { lat, lng } = event.latlng;
@@ -131,7 +142,11 @@ function App() {
 			/>
 			{newPoint.active && (
 				<Marker position={[newPoint.lat, newPoint.lng]} icon={myIcon}>
-					<Popup>Nouvelle intervention</Popup>
+					<Popup>
+						<span>
+							A pretty CSS3 popup. <br /> Easily customizable.
+						</span>
+					</Popup>
 				</Marker>
 			)}
 			{listOfMapPoints}
