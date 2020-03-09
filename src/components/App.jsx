@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { IntlProvider } from "react-intl";
@@ -63,6 +63,12 @@ function App() {
 	const [mapPoints, setMapPoints] = useState(defaultRandomPoints);
 	const [newPoint, setNewPoint] = useState(defaultNewPoint);
 	const [addressSearch, setAddressSearch] = useState("");
+	const [addressList, setAddressList] = useState([]);
+	const [addressListBuffer, setAddressListBuffer] = useState({
+		loading: false,
+		length: 0,
+		found: false
+	});
 	const recaptchaRef = React.createRef();
 
 	const myIcon = L.icon({
@@ -128,6 +134,43 @@ function App() {
 				}
 			});
 	};
+
+	const completeAddress = address => {
+		if (
+			Math.abs(addressSearch.length - addressListBuffer.length) > 2 &&
+			!addressListBuffer.loading &&
+			!newPoint.active &&
+			!addressListBuffer.found
+		) {
+			setAddressListBuffer({ loading: true, length: addressSearch.length });
+			fetch(
+				`https://us1.locationiq.com/v1/autocomplete.php?key=${process.env.REACT_APP_LOCATIONIQ_TOKEN}&q=${address}&limit=5&format=json&viewbox=-73.996302,45.381525,-73.416581,45.766331&bounded=1`
+			)
+				.then(response => {
+					return response.json();
+				})
+				.then(myJson => {
+					if (Array.isArray(myJson)) {
+						const addressList = myJson.map(ele => ({
+							lat: ele.lat,
+							lng: ele.lon,
+							address: ele.display_address
+						}));
+						console.log(addressSearch, myJson);
+						setAddressList(addressList);
+						setTimeout(
+							() => setAddressListBuffer(prev => ({ ...prev, loading: false })),
+							2000
+						);
+					}
+				});
+		}
+	};
+
+	useEffect(() => {
+		completeAddress(addressSearch);
+	}, [addressSearch]);
+
 	const map = (
 		<Map
 			center={position}
@@ -161,7 +204,14 @@ function App() {
 					<section className="map">
 						{map}
 						<AddressForm
-							{...{ findLatLong, setAddressSearch, addressSearch }}
+							{...{
+								findLatLong,
+								setAddressSearch,
+								addressSearch,
+								addressList,
+								setAddressList,
+								setAddressListBuffer
+							}}
 						/>
 						{newPoint.active && (
 							<InterventionForm

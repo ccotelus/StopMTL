@@ -24,15 +24,48 @@ main > section {
 		filter: hue-rotate(80deg);
 	}
 
-	.addressSearch input {
-		width: 100%;
-		border: 1px solid black;
-		border-left: none;
-		border-right: none;
-		text-align: center;
-		padding: 0.5em 1em;
-		box-sizing: border-box;
-		font-size: 1em;
+	.addressSearch {
+		position: relative;
+
+		input {
+			width: 100%;
+			border: 1px solid black;
+			border-left: none;
+			border-right: none;
+			text-align: center;
+			padding: 0.5em 1em;
+			box-sizing: border-box;
+			font-size: 1em;
+		}
+
+		& > ul {
+			position: absolute;
+			background: white;
+			top: -1em;
+			padding: 0.5em;
+			transform: translateY(-100%);
+			z-index: 999;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			border-top: 1px solid black;
+
+			li {
+				list-style-type: none;
+				width: 600px;
+				max-width: 100vw;
+				overflow-x: hidden;
+				cursor: pointer;
+
+				&:hover {
+					background-color: lightgrey;
+				}
+				&:before {
+					content: "- ";
+				}
+			}
+		}
 	}
 	.question_form {
 		position: absolute;
