@@ -1,208 +1,210 @@
 @import "../variables";
 
 .leaflet-container {
-  min-height: 400px;
-  height: calc(80vh - 70px);
-  width: 100%;
+	min-height: 400px;
+	height: calc(80vh - 70px);
+	width: 100%;
 }
 
-.about {
-  max-width: 800px;
-  margin: 0 auto;
+main > section {
+	max-width: 800px;
+	margin: 0 auto;
 }
 .map {
-  position: relative;
-  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-  box-sizing: border-box;
+	position: relative;
+	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
 
-  .leaflet-marker-icon:not(.new_point) {
-    // filter:grayscale(1) brightness(0.5)
-  }
-  .new_point {
-    filter: hue-rotate(80deg);
-  }
+	.leaflet-marker-icon:not(.new_point) {
+		// filter:grayscale(1) brightness(0.5)
+	}
+	.new_point {
+		filter: hue-rotate(80deg);
+	}
 
-  .addressSearch input {
-    width: 100%;
-    border: 1px solid black;
-    border-left: none;
-    border-right: none;
-    text-align: center;
-    padding: 0.5em 1em;
-    box-sizing: border-box;
-    font-size: 1em;
-  }
-  .question_form {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    max-width: 350px;
-    z-index: 9999;
-    padding: 1em;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 12px;
-    box-sizing: border-box;
-    border-left: 1px solid black;
-    box-shadow: -10px 0px 8px -7px rgba(0, 0, 0, 0.75);
+	.addressSearch input {
+		width: 100%;
+		border: 1px solid black;
+		border-left: none;
+		border-right: none;
+		text-align: center;
+		padding: 0.5em 1em;
+		box-sizing: border-box;
+		font-size: 1em;
+	}
+	.question_form {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		max-width: 350px;
+		z-index: 9999;
+		padding: 1em;
+		background-color: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 12px;
+		box-sizing: border-box;
+		border-left: 1px solid black;
+		box-shadow: -10px 0px 8px -7px rgba(0, 0, 0, 0.75);
 
-    h2 {
-      text-align: center;
-    }
+		h2 {
+			text-align: center;
+		}
 
-    form {
-      width: 90%;
+		form {
+			width: 90%;
 
-      flex-direction: column;
-      align-items: center;
-    }
-    input,
-    select {
-      width: 100%;
-      border: 1px solid $faded-color;
-      box-sizing: border-box;
-      margin: 0.5em 0;
-      padding: 0.25em 0.5em;
-      font-size: 1.2em;
-      border-radius: 0.2em;
-    }
-    input[type="reset"],
-    input[type="submit"] {
-      color: white;
-      background: black;
-    }
+			flex-direction: column;
+			align-items: center;
+		}
+		input,
+		select {
+			width: 100%;
+			border: 1px solid $faded-color;
+			box-sizing: border-box;
+			margin: 0.5em 0;
+			padding: 0.25em 0.5em;
+			font-size: 1.2em;
+			border-radius: 0.2em;
+		}
+		input[type="reset"],
+		input[type="submit"] {
+			color: white;
+			background: black;
+		}
 
-    .captcha {
-      margin: 0 auto;
-    }
-  }
+		.captcha {
+			margin: 0 auto;
+		}
+	}
 }
 
 @media screen and (max-width: 960px) {
-  .leaflet-container {
-    height: 400px;
-    width: 100%;
-  }
-  .map {
-    .question_form {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      border: none;
-      form {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        width: 100%;
-        border: none;
+	.leaflet-container {
+		height: 400px;
+		width: 100%;
+	}
+	.map {
+		.question_form {
+			position: relative;
+			width: 100%;
+			max-width: 100%;
+			border: none;
+			form {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				justify-content: space-evenly;
+				width: 100%;
+				border: none;
 
-        .captcha {
-          margin: 0;
-          width: 45%;
-        }
-        input,
-        select {
-          width: 45%;
-        }
-        div:last-of-type {
-          width: 45%;
-          display: flex;
-          flex-direction: column;
+				.captcha {
+					margin: 0;
+					width: 45%;
+				}
+				input,
+				select {
+					width: 45%;
+				}
+				div:last-of-type {
+					width: 45%;
+					display: flex;
+					flex-direction: column;
 
-          input {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
+					input {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 680px) {
-  .map {
-    .question_form {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      border: none;
-      form {
-        .captcha {
-          margin: 0;
-          margin-left: auto;
-          width: auto;
-        }
-        input,
-        select {
-          width: 100%;
-        }
-        div:last-of-type {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
+	.map {
+		.question_form {
+			position: relative;
+			width: 100%;
+			max-width: 100%;
+			border: none;
+			form {
+				.captcha {
+					margin: 0;
+					margin-left: auto;
+					width: auto;
+				}
+				input,
+				select {
+					width: 100%;
+				}
+				div:last-of-type {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
 
-          input {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
+					input {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
 
-  header {
-    height: auto;
-    flex-direction: column;
-    svg {
-      max-width: 200px;
-      min-width: 140px;
-      width: 50%;
-      height: auto;
-      margin: 0 auto;
-    }
-    ul {
-      display: flex;
-      padding: 0;
-      margin-top: 1em;
-      justify-content: center;
+	header {
+		height: auto;
+		flex-direction: column;
+		svg {
+			max-width: 200px;
+			min-width: 140px;
+			width: 50%;
+			height: auto;
+			margin: 0 auto;
+		}
+		ul {
+			display: flex;
+			padding: 0;
+			margin-top: 1em;
+			justify-content: center;
 
-      li {
-        margin: 0 1em;
-        list-style-type: none;
+			li {
+				margin: 0 1em;
+				list-style-type: none;
 
-        a {
-          color: $main-color;
-          text-decoration: none;
+				a {
+					color: $main-color;
+					text-decoration: none;
 
-          &:hover {
-            color: $highlight-color;
-          }
-        }
-      }
-    }
-  }
+					&:hover {
+						color: $highlight-color;
+					}
+				}
+			}
+		}
+	}
 }
 
 .about ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-  li {
-    list-style-type: none;
-    position: relative;
-    margin: 2em 0;
+	li {
+		list-style-type: none;
+		position: relative;
+		margin: 2em 0;
 
-    &:before {
-      content: "1";
-      font-size: 3em;
-      opacity: 0.4;
-      position: absolute;
-      left: -3em;
-      top: 50%;
-    }
-  }
+		&:before {
+			content: "1";
+			font-size: 3em;
+			opacity: 0.4;
+			position: absolute;
+			left: -3em;
+			top: 50%;
+		}
+	}
 }
